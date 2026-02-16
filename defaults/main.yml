@@ -65,11 +65,7 @@ prometheus_nginxlog_exporter_container_syslog_port: 6514
 
 # A list of additional container networks that the container would be connected to.
 # The role does not create these networks, so make sure they already exist.
-#
-# Use this to expose this container to another reverse proxy, which runs in a different container network,
-# without exposing all other container services to that other reverse-proxy.
-#
-# For background, see: https://github.com/spantaleev/matrix-docker-ansible-deploy/issues/1498
+# Use this to expose this container to another reverse proxy, which runs in a different container network.
 prometheus_nginxlog_exporter_container_additional_networks: "{{ prometheus_nginxlog_exporter_container_additional_networks_auto + prometheus_nginxlog_exporter_container_additional_networks_custom }}"
 prometheus_nginxlog_exporter_container_additional_networks_auto: []
 prometheus_nginxlog_exporter_container_additional_networks_custom: []
@@ -109,16 +105,6 @@ prometheus_nginxlog_exporter_container_extra_arguments_auto: []
 prometheus_nginxlog_exporter_container_extra_arguments_custom: []
 
 # A list of extra arguments to pass to the prometheus-nginxlog-exporter process
-#
-# Example:
-# prometheus_nginxlog_exporter_process_extra_arguments:
-#   - "--collector.systemd"
-#   - "--collector.logind"
-#
-# Note: the above is just an example. Various collectors may require various tweaks to be able to run.
-# Running the systemd collector requires the following `prometheus_nginxlog_exporter_process_extra_arguments`:
-# - the socket to be mounted as well (`--mount type=bind,src=/var/run/dbus/system_bus_socket,dst=/var/run/dbus/system_bus_socket,ro,bind-propagation=rslave`)
-# - (on AppArmor-based distros) disabling AppArmor protection (`--security-opt apparmor=unconfined`)
 prometheus_nginxlog_exporter_process_extra_arguments: "{{ prometheus_nginxlog_exporter_process_extra_arguments_auto + prometheus_nginxlog_exporter_process_extra_arguments_custom }}"
 prometheus_nginxlog_exporter_process_extra_arguments_auto:
   - -config-file /etc/prometheus-nginxlog-exporter/prometheus-nginxlog-exporter.yaml
