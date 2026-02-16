@@ -11,7 +11,7 @@
 
 prometheus_nginxlog_exporter_enabled: true
 
-prometheus_nginxlog_exporter_identifier: prometheus-node-exporter
+prometheus_nginxlog_exporter_identifier: prometheus-nginxlog-exporter
 prometheus_nginxlog_exporter_base_path: "/{{ prometheus_nginxlog_exporter_identifier }}"
 
 # renovate: datasource=docker depName=prom/node-exporter versioning=semver

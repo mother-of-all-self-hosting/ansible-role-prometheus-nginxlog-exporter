@@ -8,9 +8,9 @@
   when: prometheus_nginxlog_exporter_enabled | bool
   tags:
     - setup-all
-    - setup-prometheus-node-exporter
+    - setup-prometheus-nginxlog-exporter
     - install-all
-    - install-prometheus-node-exporter
+    - install-prometheus-nginxlog-exporter
   block:
     - name: Validate Prometheus node exporter configuration
       ansible.builtin.include_tasks: "{{ role_path }}/tasks/validate_config.yml"
@@ -21,7 +21,7 @@
   when: not prometheus_nginxlog_exporter_enabled | bool
   tags:
     - setup-all
-    - setup-prometheus-node-exporter
+    - setup-prometheus-nginxlog-exporter
   block:
     - name: Uninstall Prometheus node exporter
       ansible.builtin.include_tasks: "{{ role_path }}/tasks/uninstall.yml"
