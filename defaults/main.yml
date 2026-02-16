@@ -28,7 +28,7 @@ prometheus_nginxlog_exporter_hostname: ""
 
 # The path at which prometheus-nginxlog-exporter is served. You don't need to configure it if you're not exposing this.
 # This value must either be `/` or not end with a slash.
-prometheus_nginxlog_exporter_path_prefix: "/metrics/node-exporter"
+prometheus_nginxlog_exporter_path_prefix: "/metrics/nginxlog"
 
 prometheus_nginxlog_exporter_container_image: "{{ prometheus_nginxlog_exporter_container_image_registry_prefix }}martin-helmich/prometheus-nginxlog-exporter/exporter:{{ prometheus_nginxlog_exporter_container_image_tag }}"
 prometheus_nginxlog_exporter_container_image_tag: "{{ 'latest' if prometheus_nginxlog_exporter_version == 'master' else prometheus_nginxlog_exporter_version }}-{{ prometheus_nginxlog_exporter_architecture }}"
