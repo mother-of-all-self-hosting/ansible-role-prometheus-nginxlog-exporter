@@ -87,7 +87,7 @@ prometheus_nginxlog_exporter_container_additional_networks_custom: []
 # See `../templates/labels.j2` for details.
 #
 # To inject your own other container labels, see `prometheus_nginxlog_exporter_container_labels_additional_labels_custom`.
-prometheus_nginxlog_exporter_container_labels_traefik_enabled: false
+prometheus_nginxlog_exporter_container_labels_traefik_enabled: "{{ true if prometheus_nginxlog_exporter_hostname else false }}"
 prometheus_nginxlog_exporter_container_labels_traefik_docker_network: "{{ prometheus_nginxlog_exporter_container_network }}"
 prometheus_nginxlog_exporter_container_labels_traefik_hostname: "{{ prometheus_nginxlog_exporter_hostname }}"
 # The path prefix must either be `/` or not end with a slash (e.g. `/metrics`).
