@@ -5,9 +5,9 @@ SPDX-FileCopyrightText: 2026 Suguru Hirahara
 SPDX-License-Identifier: AGPL-3.0-or-later
 -->
 
-# Prometheus node exporter Ansible role
+# prometheus-nginxlog-exporter Ansible role
 
-This is an [Ansible](https://www.ansible.com/) role which installs [Prometheus node exporter](https://github.com/prometheus/node_exporter) to run as a [Docker](https://www.docker.com/) container wrapped in a systemd service.
+This is an [Ansible](https://www.ansible.com/) role which installs [prometheus-nginxlog-exporter](https://github.com/prometheus/node_exporter) to run as a [Docker](https://www.docker.com/) container wrapped in a systemd service.
 
 This role *implicitly* depends on:
 

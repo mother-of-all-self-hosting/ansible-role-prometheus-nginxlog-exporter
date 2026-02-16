@@ -7,7 +7,7 @@ SPDX-License-Identifier: AGPL-3.0-or-later
 #}
 
 [Unit]
-Description=Prometheus node exporter ({{ prometheus_nginxlog_exporter_identifier }})
+Description=prometheus-nginxlog-exporter ({{ prometheus_nginxlog_exporter_identifier }})
 {% for service in prometheus_nginxlog_exporter_systemd_required_services_list %}
 Requires={{ service }}
 After={{ service }}

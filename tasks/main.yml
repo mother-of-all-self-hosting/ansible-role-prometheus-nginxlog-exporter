@@ -4,7 +4,7 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
 ---
-- name: Perform Prometheus node exporter installation tasks
+- name: Perform prometheus-nginxlog-exporter installation tasks
   when: prometheus_nginxlog_exporter_enabled | bool
   tags:
     - setup-all
@@ -12,16 +12,16 @@
     - install-all
     - install-prometheus-nginxlog-exporter
   block:
-    - name: Validate Prometheus node exporter configuration
+    - name: Validate prometheus-nginxlog-exporter configuration
       ansible.builtin.include_tasks: "{{ role_path }}/tasks/validate_config.yml"
-    - name: Install Prometheus node exporter
+    - name: Install prometheus-nginxlog-exporter
       ansible.builtin.include_tasks: "{{ role_path }}/tasks/install.yml"
 
-- name: Perform Prometheus node exporter uninstallation tasks
+- name: Perform prometheus-nginxlog-exporter uninstallation tasks
   when: not prometheus_nginxlog_exporter_enabled | bool
   tags:
     - setup-all
     - setup-prometheus-nginxlog-exporter
   block:
-    - name: Uninstall Prometheus node exporter
+    - name: Uninstall prometheus-nginxlog-exporter
       ansible.builtin.include_tasks: "{{ role_path }}/tasks/uninstall.yml"

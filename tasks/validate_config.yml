@@ -26,7 +26,7 @@
       "new": "prometheus_nginxlog_exporter_container_image_registry_prefix_upstream_default"
     - { "old": "prometheus_nginxlog_exporter_docker_image_force_pull", "new": "prometheus_nginxlog_exporter_container_image_force_pull" }
 
-- name: Fail if required Prometheus node exporter settings not defined
+- name: Fail if required prometheus-nginxlog-exporter settings not defined
   ansible.builtin.fail:
     msg: >-
       You need to define a required configuration setting (`{{ item }}`).
@@ -39,7 +39,7 @@
 - name: Run if Traefik is enabled
   when: prometheus_nginxlog_exporter_container_labels_traefik_enabled | bool
   block:
-    - name: Fail if Traefik settings required for Prometheus node exporter are not defined
+    - name: Fail if Traefik settings required for prometheus-nginxlog-exporter are not defined
       ansible.builtin.fail:
         msg: >-
           You need to define a required configuration setting (`{{ item }}`).

@@ -4,7 +4,7 @@ galaxy_info:
   company: etke.cc
   role_name: prometheus_nginxlog_exporter
   namespace: etkecc
-  description: Prometheus node exporter role
+  description: prometheus-nginxlog-exporter role
   platforms:
     - name: Debian
       versions:
