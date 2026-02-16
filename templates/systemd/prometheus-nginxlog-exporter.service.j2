@@ -37,7 +37,7 @@ ExecStartPre={{ devture_systemd_docker_base_host_command_docker }} create \
       --pid=host \
       --env-file={{ prometheus_nginxlog_exporter_base_path }}/env \
       --label-file={{ prometheus_nginxlog_exporter_base_path }}/labels \
-      --mount type=bind,src=/,dst=/host,ro,bind-propagation=rslave \
+      --mount type=bind,src={{ prometheus_nginxlog_exporter_config_path }},dst=/etc/prometheus-nginxlog-exporter \
       {% for arg in prometheus_nginxlog_exporter_container_extra_arguments %}
       {{ arg }} \
       {% endfor %}

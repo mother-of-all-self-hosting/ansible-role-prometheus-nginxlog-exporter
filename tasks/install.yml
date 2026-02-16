@@ -5,13 +5,16 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
 ---
-- name: Ensure prometheus-nginxlog-exporter base path exists
+- name: Ensure prometheus-nginxlog-exporter paths exist
   ansible.builtin.file:
-    path: "{{ prometheus_nginxlog_exporter_base_path }}"
+    path: "{{ item }}"
     state: directory
-    mode: "0700"
+    mode: "0750"
     owner: "{{ prometheus_nginxlog_exporter_uid }}"
     group: "{{ prometheus_nginxlog_exporter_gid }}"
+  with_items:
+    - "{{ prometheus_nginxlog_exporter_base_path }}"
+    - "{{ prometheus_nginxlog_exporter_config_path }}"
 
 - name: Ensure prometheus-nginxlog-exporter support files installed
   ansible.builtin.template:
