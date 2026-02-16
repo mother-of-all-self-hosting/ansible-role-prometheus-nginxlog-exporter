@@ -1,9 +1,9 @@
 ---
 galaxy_info:
-  author: etke.cc
-  company: etke.cc
+  author: mash
+  company: mash
   role_name: prometheus_nginxlog_exporter
-  namespace: etkecc
+  namespace: mash
   description: prometheus-nginxlog-exporter role
   platforms:
     - name: Debian
