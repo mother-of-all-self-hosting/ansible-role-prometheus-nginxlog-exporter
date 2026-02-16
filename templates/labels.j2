@@ -34,7 +34,7 @@ traefik.http.routers.{{ prometheus_nginxlog_exporter_identifier }}.tls={{ promet
 traefik.http.routers.{{ prometheus_nginxlog_exporter_identifier }}.tls.certResolver={{ prometheus_nginxlog_exporter_container_labels_traefik_tls_certResolver }}
 {% endif %}
 
-traefik.http.services.{{ prometheus_nginxlog_exporter_identifier }}.loadbalancer.server.port={{ prometheus_nginxlog_exporter_container_http_port }}
+traefik.http.services.{{ prometheus_nginxlog_exporter_identifier }}.loadbalancer.server.port={{ prometheus_nginxlog_exporter_container_metrics_port }}
 {% endif %}
 
 {% for arg in prometheus_nginxlog_exporter_container_labels_additional_labels %}

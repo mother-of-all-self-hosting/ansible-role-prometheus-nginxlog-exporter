@@ -32,7 +32,7 @@ ExecStartPre={{ devture_systemd_docker_base_host_command_docker }} create \
       --read-only \
       --network={{ prometheus_nginxlog_exporter_container_network }} \
       {% if prometheus_nginxlog_exporter_container_http_host_bind_port %}
-      -p {{ prometheus_nginxlog_exporter_container_http_host_bind_port }}:{{ prometheus_nginxlog_exporter_container_http_port }} \
+      -p {{ prometheus_nginxlog_exporter_container_http_host_bind_port }}:{{ prometheus_nginxlog_exporter_container_metrics_port }} \
       {% endif %}
       --pid=host \
       --env-file={{ prometheus_nginxlog_exporter_base_path }}/env \
