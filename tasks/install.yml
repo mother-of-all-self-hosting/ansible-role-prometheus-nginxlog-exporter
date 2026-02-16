@@ -27,6 +27,15 @@
     - env
     - labels
 
+- name: Ensure prometheus-nginxlog-exporter configuration file installed
+  ansible.builtin.copy:
+    content: "{{ prometheus_nginxlog_exporter_config | to_nice_yaml(indent=2, width=999999) }}"
+    dest: "{{ prometheus_nginxlog_exporter_config_path }}/prometheus-nginxlog-exporter.yaml"
+    mode: "0644"
+    owner: "{{ prometheus_nginxlog_exporter_uid }}"
+    group: "{{ prometheus_nginxlog_exporter_gid }}"
+  register: prometheus_nginxlog_exporter_config_result
+
 - name: Ensure prometheus-nginxlog-exporter container image is pulled via community.docker.docker_image
   when: devture_systemd_docker_base_container_image_pull_method == 'ansible-module'
   community.docker.docker_image:

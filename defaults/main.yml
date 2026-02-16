@@ -144,6 +144,28 @@ prometheus_nginxlog_exporter_config_namespaces_source_tags: "{{ prometheus_nginx
 prometheus_nginxlog_exporter_config_namespaces_source_tags_auto: []
 prometheus_nginxlog_exporter_config_namespaces_source_tags_custom: []
 
+# Default prometheus-nginxlog-exporter configuration template which covers the generic use case.
+# You can customize it by controlling the various variables inside it.
+#
+# For a more advanced customization, you can extend the default (see `prometheus_nginxlog_exporter_extension_yaml`)
+# or completely replace this variable with your own template.
+prometheus_nginxlog_exporter_yaml: "{{ lookup('template', 'templates/prometheus-nginxlog-exporter.yaml.j2') }}"
+
+prometheus_nginxlog_exporter_extension_yaml: |
+  # Your custom YAML configuration for prometheus-nginxlog-exporter goes here.
+  # This configuration extends the default starting configuration (`prometheus_nginxlog_exporter_yaml`).
+  #
+  # You can override individual variables from the default configuration, or introduce new ones.
+  #
+  # If you need something more special, you can take full control by
+  # completely redefining `prometheus_nginxlog_exporter_yaml`.
+
+prometheus_nginxlog_exporter_extension: "{{ prometheus_nginxlog_exporter_extension_yaml | from_yaml if prometheus_nginxlog_exporter_extension_yaml | from_yaml is mapping else {} }}"
+
+# Holds the final prometheus-nginxlog-exporter configuration (a combination of the default and its extension).
+# You most likely don't need to touch this variable. Instead, see `prometheus_nginxlog_exporter_yaml`.
+prometheus_nginxlog_exporter_config: "{{ prometheus_nginxlog_exporter_yaml | from_yaml | combine(prometheus_nginxlog_exporter_extension, recursive=True) }}"
+
 # Specify the timezone
 prometheus_nginxlog_exporter_environment_variables_tz: UTC
 
