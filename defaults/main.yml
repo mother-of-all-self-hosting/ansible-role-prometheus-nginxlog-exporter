@@ -1,21 +1,23 @@
+# SPDX-FileCopyrightText: 2022 MDAD project contributors
+# SPDX-FileCopyrightText: 2023 Samuel Meenzen
 # SPDX-FileCopyrightText: 2023-2025 Nikita Chernyi
 # SPDX-FileCopyrightText: 2023-2025 Slavi Pantaleev
 # SPDX-FileCopyrightText: 2024 Sergio Durigan Junior
+# SPDX-FileCopyrightText: 2024-2026 Suguru Hirahara
 # SPDX-FileCopyrightText: 2025 MASH project contributors
-# SPDX-FileCopyrightText: 2025, 2026 Suguru Hirahara
 #
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
 ---
-# Project source code URL: https://github.com/prometheus/node_exporter
+# Project source code URL: https://github.com/martin-helmich/prometheus-nginxlog-exporter
 
 prometheus_nginxlog_exporter_enabled: true
 
 prometheus_nginxlog_exporter_identifier: prometheus-nginxlog-exporter
 prometheus_nginxlog_exporter_base_path: "/{{ prometheus_nginxlog_exporter_identifier }}"
 
-# renovate: datasource=docker depName=prom/node-exporter versioning=semver
-prometheus_nginxlog_exporter_version: v1.10.2
+# renovate: datasource=docker depName=ghcr.io/martin-helmich/prometheus-nginxlog-exporter/exporter
+prometheus_nginxlog_exporter_version: v1.10.0
 
 prometheus_nginxlog_exporter_uid: ""
 prometheus_nginxlog_exporter_gid: ""
@@ -27,12 +29,17 @@ prometheus_nginxlog_exporter_hostname: ""
 # This value must either be `/` or not end with a slash.
 prometheus_nginxlog_exporter_path_prefix: "/metrics/node-exporter"
 
-prometheus_nginxlog_exporter_container_image: "{{ prometheus_nginxlog_exporter_container_image_registry_prefix }}prom/node-exporter:{{ prometheus_nginxlog_exporter_container_image_tag }}"
-prometheus_nginxlog_exporter_container_image_tag: "{{ prometheus_nginxlog_exporter_version }}"
+prometheus_nginxlog_exporter_container_image: "{{ prometheus_nginxlog_exporter_container_image_registry_prefix }}martin-helmich/prometheus-nginxlog-exporter/exporter:{{ prometheus_nginxlog_exporter_container_image_tag }}"
+prometheus_nginxlog_exporter_container_image_tag: "{{ 'latest' if prometheus_nginxlog_exporter_version == 'master' else prometheus_nginxlog_exporter_version }}-{{ prometheus_nginxlog_exporter_architecture }}"
 prometheus_nginxlog_exporter_container_image_registry_prefix: "{{ prometheus_nginxlog_exporter_container_image_registry_prefix_upstream }}"
 prometheus_nginxlog_exporter_container_image_registry_prefix_upstream: "{{ prometheus_nginxlog_exporter_container_image_registry_prefix_upstream_default }}"
-prometheus_nginxlog_exporter_container_image_registry_prefix_upstream_default: "docker.io/"
+prometheus_nginxlog_exporter_container_image_registry_prefix_upstream_default: ghcr.io/
 prometheus_nginxlog_exporter_container_image_force_pull: "{{ prometheus_nginxlog_exporter_container_image.endswith(':latest') }}"
+
+prometheus_nginxlog_exporter_container_image_architecture: ['amd64', 'arm64']
+
+prometheus_nginxlog_exporter_architecture: ""
+prometheus_nginxlog_exporter_architecture_check_enabled: true
 
 # The base container network
 #
