@@ -62,8 +62,15 @@ prometheus_nginxlog_exporter_container_network_deletion_enabled: true
 # Takes an "<ip>:<port>" or "<port>" value (e.g. "127.0.0.1:9100"), just a port number or empty string to not expose.
 prometheus_nginxlog_exporter_container_http_host_bind_port: ""
 
+# Specify how the container publishes its SYSLOG port (as defined by `prometheus_nginxlog_exporter_container_syslog_port`).
+#
+# Takes an "<ip>:<port>" or "<port>" value (e.g. "127.0.0.1:6514"), or empty string to not expose.
+# Note: is an UDP connection!
+prometheus_nginxlog_exporter_container_syslog_host_bind_port: ""
+
 # The port number in the container
 prometheus_nginxlog_exporter_container_metrics_port: 4040
+prometheus_nginxlog_exporter_container_syslog_port: 6514
 
 # A list of additional container networks that the container would be connected to.
 # The role does not create these networks, so make sure they already exist.
