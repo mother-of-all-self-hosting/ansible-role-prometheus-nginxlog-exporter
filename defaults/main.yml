@@ -129,7 +129,8 @@ prometheus_nginxlog_exporter_container_extra_arguments_custom: []
 # - the socket to be mounted as well (`--mount type=bind,src=/var/run/dbus/system_bus_socket,dst=/var/run/dbus/system_bus_socket,ro,bind-propagation=rslave`)
 # - (on AppArmor-based distros) disabling AppArmor protection (`--security-opt apparmor=unconfined`)
 prometheus_nginxlog_exporter_process_extra_arguments: "{{ prometheus_nginxlog_exporter_process_extra_arguments_auto + prometheus_nginxlog_exporter_process_extra_arguments_custom }}"
-prometheus_nginxlog_exporter_process_extra_arguments_auto: []
+prometheus_nginxlog_exporter_process_extra_arguments_auto:
+  - -config-file /etc/prometheus-nginxlog-exporter/prometheus-nginxlog-exporter.yaml
 prometheus_nginxlog_exporter_process_extra_arguments_custom: []
 
 # List of systemd services that the prometheus-nginxlog-exporter systemd service depends on
