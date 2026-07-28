@@ -1,0 +1,53 @@
+# SPDX-FileCopyrightText: 2026 Suguru Hirahara
+# SPDX-FileCopyrightText: 2026 spatterlight
+#
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+---
+- name: Verify prometheus-nginxlog-exporter systemd service
+  hosts: all
+  become: true
+  gather_facts: false
+  tasks:
+    - name: Wait for prometheus-nginxlog-exporter service to become active (up to 180s)
+      ansible.builtin.systemd:
+        name: prometheus-nginxlog-exporter.service
+      register: prometheus_nginxlog_exporter_service
+      until: prometheus_nginxlog_exporter_service.status.ActiveState == 'active'
+      retries: 36
+      delay: 5
+
+    - name: Assert prometheus-nginxlog-exporter service is active
+      ansible.builtin.assert:
+        that: prometheus_nginxlog_exporter_service.status.ActiveState == 'active'
+        fail_msg: "prometheus-nginxlog-exporter.service not active ({{ prometheus_nginxlog_exporter_service.status.ActiveState }})"
+        success_msg: "prometheus-nginxlog-exporter.service is active"
+
+    - name: Retrieve prometheus-nginxlog-exporter service log for debugging
+      when: prometheus_nginxlog_exporter_debug_service_enabled | bool
+      ansible.builtin.command:
+        cmd: journalctl -xeu prometheus-nginxlog-exporter.service
+      changed_when: false
+
+    - name: Wait for prometheus-nginxlog-exporter HTTP endpoint to respond (up to 10m)
+      ansible.builtin.uri:
+        url: "http://localhost:4040/metrics" # cf. /templates/prometheus-nginxlog-exporter.yaml.j2
+        method: GET
+        status_code: [200, 302]
+        follow_redirects: none
+      register: prometheus_nginxlog_exporter_endpoint
+      until: prometheus_nginxlog_exporter_endpoint.status in [200, 302]
+      retries: 120
+      delay: 5
+
+    - name: Assert prometheus-nginxlog-exporter HTTP endpoint responds
+      ansible.builtin.assert:
+        that: prometheus_nginxlog_exporter_endpoint.status in [200, 302]
+        fail_msg: "prometheus-nginxlog-exporter did not respond as expected ({{ prometheus_nginxlog_exporter_endpoint.status | default('no response') }})"
+        success_msg: "prometheus-nginxlog-exporter responded with {{ prometheus_nginxlog_exporter_endpoint.status }}"
+
+    - name: Show prometheus-nginxlog-exporter systemd service status summary
+      ansible.builtin.debug:
+        msg:
+          - "prometheus-nginxlog-exporter systemd: {{ prometheus_nginxlog_exporter_service.status.ActiveState }}"
+          - "prometheus-nginxlog-exporter HTTP: {{ prometheus_nginxlog_exporter_endpoint.status }}"
