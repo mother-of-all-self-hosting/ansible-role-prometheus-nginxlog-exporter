@@ -296,7 +296,7 @@
             )
           }}
 
-    - name: Assert the running exporter is the version the role asks for
+    - name: Assert the running exporter is the version this role installs
       ansible.builtin.assert:
         that: >-
           (prometheus_nginxlog_exporter_reported_version | regex_replace('^v', ''))
