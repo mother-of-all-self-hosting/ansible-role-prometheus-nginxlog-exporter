@@ -299,7 +299,7 @@
           but the role asks for {{ prometheus_nginxlog_exporter_defaults.prometheus_nginxlog_exporter_version }}
         success_msg: "prometheus-nginxlog-exporter reports version {{ prometheus_nginxlog_exporter_reported_version }}"
 
-    - name: Show prometheus-nginxlog-exporter verification summary
+    - name: Show the prometheus-nginxlog-exporter verification summary
       ansible.builtin.debug:
         msg:
           - "prometheus-nginxlog-exporter systemd: {{ prometheus_nginxlog_exporter_service.status.ActiveState }}"
