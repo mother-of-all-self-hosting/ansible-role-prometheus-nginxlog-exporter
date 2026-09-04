@@ -294,10 +294,8 @@
         that: >-
           (prometheus_nginxlog_exporter_reported_version | regex_replace('^v', ''))
           == (prometheus_nginxlog_exporter_defaults.prometheus_nginxlog_exporter_version | regex_replace('^v', ''))
-        fail_msg: >-
-          prometheus-nginxlog-exporter reports version {{ prometheus_nginxlog_exporter_reported_version | default('none') }},
-          but the role asks for {{ prometheus_nginxlog_exporter_defaults.prometheus_nginxlog_exporter_version }}
-        success_msg: "prometheus-nginxlog-exporter reports version {{ prometheus_nginxlog_exporter_reported_version }}"
+        fail_msg: "prometheus-nginxlog-exporter reports {{ prometheus_nginxlog_exporter_reported_version | default('none') }}, expected {{ prometheus_nginxlog_exporter_defaults.prometheus_nginxlog_exporter_version }}"
+        success_msg: "prometheus-nginxlog-exporter reports {{ prometheus_nginxlog_exporter_reported_version }}"
 
     - name: Show the prometheus-nginxlog-exporter verification summary
       ansible.builtin.debug:
