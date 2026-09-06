@@ -263,11 +263,6 @@
           from {{ prometheus_nginxlog_exporter_molecule_seeded_count_initial }}
           to {{ prometheus_nginxlog_exporter_molecule_seeded_count_total }}
 
-    # The exporter reports its version without a leading `v` (`1.10.0`), while
-    # the role's version variable carries one. Any leading `v` is normalized
-    # away on both sides, so that this keeps holding if either side ever stops
-    # carrying one.
-    #
     # The label is matched with a leading `{` or `,` so that `goversion`, which
     # sits on the same series and ends in the same eight characters, cannot be
     # picked up instead.
@@ -285,6 +280,10 @@
             )
           }}
 
+    # `prometheus_nginxlog_exporter_version` carries a leading `v` (`v3.14.0`) but the binary
+    # reports the bare version (`3.14.0`). Any leading `v` is normalized
+    # away on both sides, so that this keeps holding if either side ever stops
+    # carrying one.
     - name: Assert the running prometheus-nginxlog-exporter is the version this role installs
       ansible.builtin.assert:
         that: >-
