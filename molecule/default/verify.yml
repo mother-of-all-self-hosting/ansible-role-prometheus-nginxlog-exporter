@@ -271,7 +271,7 @@
     # The label is matched with a leading `{` or `,` so that `goversion`, which
     # sits on the same series and ends in the same eight characters, cannot be
     # picked up instead.
-    - name: Determine the version that the running exporter reports
+    - name: Determine the version of the running prometheus-nginxlog-exporter
       ansible.builtin.set_fact:
         prometheus_nginxlog_exporter_reported_version: >-
           {{
