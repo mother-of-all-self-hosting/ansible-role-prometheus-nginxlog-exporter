@@ -263,10 +263,6 @@
           from {{ prometheus_nginxlog_exporter_molecule_seeded_count_initial }}
           to {{ prometheus_nginxlog_exporter_molecule_seeded_count_total }}
 
-    # Tying the running version to `prometheus_nginxlog_exporter_version` is
-    # what makes this scenario a real test of the version that Renovate bumps:
-    # a bump that produces an unusable image cannot pass here.
-    #
     # The exporter reports its version without a leading `v` (`1.10.0`), while
     # the role's version variable carries one. Any leading `v` is normalized
     # away on both sides, so that this keeps holding if either side ever stops
@@ -289,7 +285,7 @@
             )
           }}
 
-    - name: Assert the running exporter is the version this role installs
+    - name: Assert the running prometheus-nginxlog-exporter is the version this role installs
       ansible.builtin.assert:
         that: >-
           (prometheus_nginxlog_exporter_reported_version | regex_replace('^v', ''))
