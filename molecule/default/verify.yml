@@ -24,6 +24,8 @@
       http_response_count_total[{][^}]*namespace="{{ prometheus_nginxlog_exporter_molecule_namespace_name }}"[^}]*status="{{ prometheus_nginxlog_exporter_molecule_seeded_status }}"
 
   tasks:
+    - name: Verify that prometheus-nginxlog-exporter works
+      block:
     # The role is not included in this playbook, so its defaults are not in
     # scope. Reading defaults/main.yml directly ties the version assertion
     # below.
@@ -304,3 +306,19 @@
           - "prometheus-nginxlog-exporter version: {{ prometheus_nginxlog_exporter_reported_version }}"
           - "prometheus-nginxlog-exporter namespace: {{ prometheus_nginxlog_exporter_molecule_namespace_name }}"
           - "prometheus-nginxlog-exporter seeded request series: {{ prometheus_nginxlog_exporter_advanced_series[0] }}"
+
+      rescue:
+        # Whatever went wrong, the reason is almost always in the systemd service log.
+        - name: Retrieve the prometheus-nginxlog-exporter systemd service log
+          ansible.builtin.command:
+            cmd: journalctl --no-pager --output=cat --unit=prometheus-nginxlog-exporter.service
+          register: prometheus_nginxlog_exporter_service_log
+          changed_when: false
+
+        - name: Show the prometheus-nginxlog-exporter systemd service log
+          ansible.builtin.debug:
+            var: prometheus_nginxlog_exporter_service_log.stdout_lines
+
+        - name: Fail because verification did not pass
+          ansible.builtin.fail:
+            msg: "prometheus-nginxlog-exporter verification failed. The systemd service log is printed above."
